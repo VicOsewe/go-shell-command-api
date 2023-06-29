@@ -1,9 +1,9 @@
 package handlers
 
 import (
-	"fmt"
 	"log"
 	"net/http"
+	"strings"
 
 	"github.com/VicOsewe/go-shell-command-api/configs"
 
@@ -13,6 +13,7 @@ import (
 
 // Presentation represents the presentation layer contract
 type Presentation interface {
+	CMDHandler() http.HandlerFunc
 }
 
 // RestFulAPIs set up RESTFUL APIs with all necessary dependencies
@@ -44,15 +45,31 @@ func (rst *RestFulAPIs) CMDHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
 		input := entities.CommandValue{}
 		DecodeJSONTargetStruct(w, r, &input)
+
 		if input.Command == "" {
-			http.Error(w, "Missing 'command' query parameter", http.StatusBadRequest)
+			payload := entities.APIResponseMessage{
+				Message:    "invalid request data, ensure `command` is provided",
+				StatusCode: http.StatusBadRequest,
+			}
+			RespondWithJSON(w, http.StatusBadRequest, payload)
 			return
 		}
+
 		output, err := usecases.ExecuteCommand(input.Command)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			payload := entities.APIResponseMessage{
+				Message:    "Command execution failed",
+				StatusCode: http.StatusBadRequest,
+			}
+			RespondWithJSON(w, http.StatusBadRequest, payload)
 			return
 		}
-		fmt.Fprintf(w, "%s", output)
+
+		payload := entities.APIResponseMessage{
+			Message:    "command retrieved successfully",
+			StatusCode: http.StatusOK,
+			Body:       strings.ReplaceAll(output, "\n", " "),
+		}
+		RespondWithJSON(w, http.StatusOK, payload)
 	}
 }

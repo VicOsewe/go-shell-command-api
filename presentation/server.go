@@ -25,7 +25,7 @@ func Router() (*mux.Router, error) {
 
 	r.Path("/health").HandlerFunc(HealthStatusCheck)
 
-	RESTRoutes := r.PathPrefix("/api/v1").Subrouter()
+	RESTRoutes := r.PathPrefix("/api").Subrouter()
 	RESTRoutes.Use(h.BasicAuth())
 
 	RESTRoutes.Path("/cmd").Methods(http.MethodPost, http.MethodOptions).HandlerFunc(h.CMDHandler())
