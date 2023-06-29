@@ -55,14 +55,19 @@ func RespondWithError(w http.ResponseWriter, code int, err error) {
 }
 
 // RespondWithJSON writes a JSON response
-func RespondWithJSON(w http.ResponseWriter, code int, payload []byte) {
+func RespondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
+	marshalledPayload, err := json.Marshal(payload)
+	if err != nil {
+		RespondWithError(w, http.StatusInternalServerError, err)
+		return
+	}
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
-	_, err := w.Write(payload)
+	_, err = w.Write(marshalledPayload)
 	if err != nil {
 		log.Printf(
 			"unable to write payload `%s` to the http.ResponseWriter: %s",
-			string(payload),
+			string(marshalledPayload),
 			err,
 		)
 	}
