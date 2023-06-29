@@ -9,6 +9,7 @@ import (
 	"os"
 	"time"
 
+	rest "github.com/VicOsewe/go-shell-command-api/presentation/http/handlers"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
@@ -19,8 +20,10 @@ const (
 
 // Router sets up the ginContext router
 func Router() (*mux.Router, error) {
-
 	r := mux.NewRouter()
+	r.Path("/health").HandlerFunc(HealthStatusCheck)
+	RESTRoutes := r.PathPrefix("/api/v1").Subrouter()
+	RESTRoutes.Path("/cmd").Methods(http.MethodPost, http.MethodOptions).HandlerFunc(rest.CMDHandler())
 	return r, nil
 }
 
