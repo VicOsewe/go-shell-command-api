@@ -21,9 +21,14 @@ const (
 // Router sets up the ginContext router
 func Router() (*mux.Router, error) {
 	r := mux.NewRouter()
+	h := InitHandlers()
+
 	r.Path("/health").HandlerFunc(HealthStatusCheck)
+
 	RESTRoutes := r.PathPrefix("/api/v1").Subrouter()
-	RESTRoutes.Path("/cmd").Methods(http.MethodPost, http.MethodOptions).HandlerFunc(rest.CMDHandler())
+	RESTRoutes.Use(h.BasicAuth())
+
+	RESTRoutes.Path("/cmd").Methods(http.MethodPost, http.MethodOptions).HandlerFunc(h.CMDHandler())
 	return r, nil
 }
 
@@ -36,8 +41,8 @@ func HealthStatusCheck(w http.ResponseWriter, r *http.Request) {
 }
 
 // InitHandlers initializes all the handlers dependencies
-func InitHandlers() {
-
+func InitHandlers() *rest.RestFulAPIs {
+	return rest.NewRestFulAPIs()
 }
 
 // PrepareServer prepares the http server
