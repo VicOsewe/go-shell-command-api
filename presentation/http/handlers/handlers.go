@@ -7,8 +7,8 @@ import (
 
 	"github.com/VicOsewe/go-shell-command-api/configs"
 
-	"github.com/VicOsewe/go-shell-command-api/internal/app/entities"
-	"github.com/VicOsewe/go-shell-command-api/internal/app/usecases"
+	"github.com/VicOsewe/go-shell-command-api/entities"
+	"github.com/VicOsewe/go-shell-command-api/usecases"
 )
 
 // Presentation represents the presentation layer contract
