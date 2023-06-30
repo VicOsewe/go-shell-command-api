@@ -31,6 +31,37 @@ Holds configuration files and related code, such as config.go, which handles the
 
 1. Golang
 
+
+
+## How to use it
+
+1. First, clone the code.
+
+```bash
+    dev@dev:~$ git clone git@github.com:VicOsewe/go-shell-command-api.git
+```
+
+2. The next step is setting up your local environment by creating an `env.sh` and add your envs
+
+``` bash
+    export PORT="8080"
+    export AUTH_PASSWORD="basic-auth-password"
+    export AUTH_USERNAME="basic-auth-username"
+```
+
+3. Install the dependencies and generally ensure code health by running these commands.
+
+```bash
+    dev@dev:~$ go mod tidy
+    dev@dev:~$ go generate ./...
+```
+
+4. Run the server at http://localhost:8080/
+
+```bash
+    dev@dev:~$ go run main.go
+```
+
 ## Features
 
 - Accepts shell commands via query parameters or JSON body.
@@ -68,34 +99,3 @@ Holds configuration files and related code, such as config.go, which handles the
         "body":  "/home"
     }
 ```
-
-## How to use it
-
-1. First, clone the code.
-
-```bash
-    dev@dev:~$ git clone git@github.com:VicOsewe/go-shell-command-api.git
-```
-
-2. The next step is setting up your local environment by creating an `env.sh` and add your envs
-
-``` bash
-    export PORT="8080"
-    export AUTH_PASSWORD="basic-auth-password"
-    export AUTH_USERNAME="basic-auth-username"
-```
-
-3. Install the dependencies and generally ensure code health by running these commands.
-
-```bash
-    dev@dev:~$ go mod tidy
-    dev@dev:~$ go generate ./...
-```
-
-4. Run the server at http://localhost:8080/
-
-```bash
-    dev@dev:~$ go run main.go
-```
-
-
