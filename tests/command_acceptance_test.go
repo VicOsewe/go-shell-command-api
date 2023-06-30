@@ -15,7 +15,6 @@ import (
 	"time"
 
 	"github.com/VicOsewe/go-shell-command-api/configs"
-	"github.com/VicOsewe/go-shell-command-api/entities"
 	"github.com/VicOsewe/go-shell-command-api/presentation"
 	"github.com/imroc/req"
 )
@@ -87,9 +86,11 @@ func TestCMDHandler(t *testing.T) {
 		Timeout: time.Minute * 10,
 	}
 
-	input := entities.CommandValue{
-		Command: "pwd",
+	var input struct {
+		Command string `json:"command"`
 	}
+
+	input.Command = "pwd"
 
 	inputBytes, err := json.Marshal(input)
 	if err != nil {
