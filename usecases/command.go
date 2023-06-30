@@ -6,6 +6,9 @@ import (
 )
 
 func ExecuteCommand(command string) (string, error) {
+	if command == "" {
+		return "", fmt.Errorf("command must not be empty")
+	}
 	cmd := exec.Command("sh", "-c", command)
 	output, err := cmd.Output()
 	if err != nil {

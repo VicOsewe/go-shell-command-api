@@ -5,6 +5,8 @@
 The GO Shell Command API is a simple HTTP REST API built with GO that allows users to execute shell commands remotely. It provides a secure and convenient way to execute various shell commands and retrieve output as an API response.
 
 ## Architecture
+This implements `Clean Architecture` which helps to separate concerns by organizing code into several layers with a very explicit rule which enables us to create a testable and maintainable project.  [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html).
+For this project we only have the presentation, usecase, entity and configs layers.
 
 #### 1. Presentation
 
