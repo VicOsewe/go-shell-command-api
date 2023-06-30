@@ -61,10 +61,7 @@ func PrepareServer(port int) *http.Server {
 	)(h)
 
 	h = handlers.CombinedLoggingHandler(os.Stdout, h)
-	h = handlers.ContentTypeHandler(
-		h,
-		"application/json",
-	)
+
 	return &http.Server{
 		Handler:      h,
 		Addr:         addr,

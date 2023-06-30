@@ -43,10 +43,17 @@ func (rst *RestFulAPIs) checkPreconditions() {
 
 func (rst *RestFulAPIs) CMDHandler() http.HandlerFunc {
 	return func(w http.ResponseWriter, r *http.Request) {
-		input := entities.CommandValue{}
-		DecodeJSONTargetStruct(w, r, &input)
+		command := r.FormValue("command")
 
-		if input.Command == "" {
+		if command == "" {
+			var body struct {
+				Command string `json:"command"`
+			}
+			DecodeJSONTargetStruct(w, r, &body)
+			command = body.Command
+		}
+
+		if command == "" {
 			payload := entities.APIResponseMessage{
 				Message:    "invalid request data, ensure `command` is provided",
 				StatusCode: http.StatusBadRequest,
@@ -55,7 +62,7 @@ func (rst *RestFulAPIs) CMDHandler() http.HandlerFunc {
 			return
 		}
 
-		output, err := usecases.ExecuteCommand(input.Command)
+		output, err := usecases.ExecuteCommand(command)
 		if err != nil {
 			payload := entities.APIResponseMessage{
 				Message:    "Command execution failed",
