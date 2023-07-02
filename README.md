@@ -5,25 +5,26 @@
 The GO Shell Command API is a simple HTTP REST API built with GO that allows users to execute shell commands remotely. It provides a secure and convenient way to execute various shell commands and retrieve output as an API response.
 
 ## Architecture
+
 This implements `Clean Architecture` which helps to separate concerns by organizing code into several layers with a very explicit rule which enables us to create a testable and maintainable project.  [The Clean Architecture](https://blog.8thlight.com/uncle-bob/2012/08/13/the-clean-architecture.html).
 For this project we only have the presentation, usecase, entity and configs layers.
 
-#### 1. Presentation
+### 1. Presentation
 
 This represents logic that consume the business logic from the `Usecase Layer`
 and renders to the view. Here you can choose to render the view in e.g `rest`
 
-#### 2. Usecases
+### 2. Usecases
 
 The code in this layer contains application specific business rules.
 This represents the pure business logic of the application.
 The rules of the application also shouldn't rely on the UI or the persistence frameworks being used.
 
-#### 3. Entities
+### 3. Entities
 
  Defines the core domain entities, which represents the user entity with its properties and behavior.
 
-#### 4. Configs
+### 4. Configs
 
 Holds configuration files and related code, such as config.go, which handles the parsing and retrieval of application configuration settings.
 
@@ -31,36 +32,34 @@ Holds configuration files and related code, such as config.go, which handles the
 
 1. Golang
 
-
-
 ## How to use it
 
 1. First, clone the code.
 
-```bash
-    dev@dev:~$ git clone git@github.com:VicOsewe/go-shell-command-api.git
-```
+    ```bash
+        dev@dev:~$ git clone git@github.com:VicOsewe/go-shell-command-api.git
+    ```
 
 2. The next step is setting up your local environment by creating an `env.sh` and add your envs
 
-``` bash
-    export PORT="8080"
-    export AUTH_PASSWORD="basic-auth-password"
-    export AUTH_USERNAME="basic-auth-username"
-```
+    ``` bash
+        export PORT="8080"
+        export AUTH_PASSWORD="basic-auth-password"
+        export AUTH_USERNAME="basic-auth-username"
+    ```
 
 3. Install the dependencies and generally ensure code health by running these commands.
 
-```bash
-    dev@dev:~$ go mod tidy
-    dev@dev:~$ go generate ./...
-```
+    ```bash
+        dev@dev:~$ go mod tidy
+        dev@dev:~$ go generate ./...
+    ```
 
-4. Run the server at http://localhost:8080/
+4. Run the server at `http://localhost:8080/`
 
-```bash
-    dev@dev:~$ go run main.go
-```
+    ```bash
+        dev@dev:~$ go run main.go
+    ```
 
 ## Features
 
@@ -82,16 +81,18 @@ Holds configuration files and related code, such as config.go, which handles the
 
 **POST** create lead
 
-    {{baseURL}}/api/cmd
+{{baseURL}}/api/cmd
 
 **Body** raw (json)
+
 ```json
     {
     "command": "pwd",
    }
 ```
 
-**Response**
+**Response** raw (json)
+
 ```json
     {
         "message": "command retrieved successfully",
