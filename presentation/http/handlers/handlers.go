@@ -11,11 +11,6 @@ import (
 	"github.com/VicOsewe/go-shell-command-api/usecases"
 )
 
-// Presentation represents the presentation layer contract
-type Presentation interface {
-	CMDHandler() http.HandlerFunc
-}
-
 // RestFulAPIs set up RESTFUL APIs with all necessary dependencies
 type RestFulAPIs struct {
 	auth struct {
